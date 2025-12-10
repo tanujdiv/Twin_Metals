@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class HomeController extends Controller
+{
+    public function index()
+    {
+        return view('user.index');
+    }
+
+    public function dashboard()
+    {
+        return view('admin.dashboard');
+    }
+
+    public function allproducts(Request $request)
+    {
+        return view('user.Allproducts');
+    }
+}
+
+

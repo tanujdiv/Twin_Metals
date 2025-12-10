@@ -4,6 +4,7 @@
     <a href="#"><i class="bi bi-people"></i> Users</a>
     <a href="#"><i class="bi bi-bag"></i> Orders</a>
     <a href={{ url('addproductview') }}><i class="bi bi-plus-circle"></i> Add Product</a>
+    <a href="{{ url('showproducts') }}"><i class="bi bi-box-seam"></i> Show Products</a>
     <a href="#"><i class="bi bi-bar-chart"></i> Analytics</a>
     <a href="#"><i class="bi bi-gear"></i> Settings</a>
     <form  action="{{ route('logout') }}" method="post">@csrf

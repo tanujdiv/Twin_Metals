@@ -56,4 +56,10 @@ class AdminController extends Controller
         return redirect()->back()->with('error', 'Product not added.');
 
     }
+
+    public function showproducts(){
+        // with category relationship
+        $products = Product::with('category')->get();
+        return view('admin.show_products', compact('products'));
+    }
 } 

@@ -36,3 +36,5 @@ Route::post('/add-category', [AdminController::class, 'addCategory'])->name('add
 Route::get('/get-categories', [AdminController::class, 'getCategories'])->name('get.categories')->middleware('adminCheck');
 
 Route::post('addproduct',[AdminController::class,'addproduct'])->name('addproduct');
+
+Route::get('showproducts',[AdminController::class,'showproducts'])->name('showproducts')->middleware('adminCheck');

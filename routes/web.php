@@ -27,7 +27,7 @@ Route::get('/',[HomeController::class,'index'])->name('home')->middleware('admin
 
 Route::get('/dashboard',[HomeController::class,'dashboard'])->name('dashboard')->middleware('auth');
 
-Route::post('allproducts',[HomeController::class,'allproducts']);
+Route::post('allproducts',[HomeController::class,'allproducts'])->middleware('auth');
 
 Route::get('addproductview',[AdminController::class,'addproductview'])->name('addproductview')->middleware('adminCheck');
 
@@ -44,3 +44,5 @@ Route::get('edit-product-view/{id}',[AdminController::class,'editProductView'])-
 Route::post('updateproduct/{id}',[AdminController::class,'updateproduct'])->name('update.product')->middleware('adminCheck');
 
 Route::delete('delete-product/{id}',[AdminController::class,'deleteproduct'])->name('delete.product')->middleware('adminCheck');
+
+Route::get('allproducts',[HomeController::class,'allproducts'])->name('product.sort');

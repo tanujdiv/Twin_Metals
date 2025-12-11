@@ -3,7 +3,6 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -46,3 +45,11 @@ Route::post('updateproduct/{id}',[AdminController::class,'updateproduct'])->name
 Route::delete('delete-product/{id}',[AdminController::class,'deleteproduct'])->name('delete.product')->middleware('adminCheck');
 
 Route::get('allproducts',[HomeController::class,'allproducts'])->name('product.sort');
+
+Route::post('add-to-cart',[HomeController::class,'addToCart'])->name('add.to.cart')->middleware('auth');
+
+Route::get('viewcart',[HomeController::class,'viewCart'])->name('view.cart')->middleware('auth');
+
+Route::post('updateCart/{id}',[HomeController::class,'updateCart'])->name('update.cart')->middleware('auth');
+
+Route::post('checkout',[HomeController::class,'checkout'])->name('checkout')->middleware('auth');

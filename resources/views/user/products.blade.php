@@ -22,10 +22,11 @@
             <div class="mt-auto d-flex align-items-center justify-content-between">
               <div class="fw-bold text-dark">₹{{ number_format($product->price, 2) }}</div>
 
-              <button class="btn btn-primary btn-sm" 
-                      onclick="event.stopPropagation(); addToCart({{ $product->id }}, 1)">
-                Add
-              </button>
+              <form action="{{ url('add-to-cart') }}" method="post">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <button type="submit" class="btn btn-sm btn-primary">Add to Cart</button>
+              </form>
             </div>
           </div>
 

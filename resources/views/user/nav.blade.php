@@ -34,10 +34,13 @@
       </form>
 
       <div class="d-flex align-items-center position-relative">
-        <button class="btn btn-outline-primary me-2" id="cartBtn" data-bs-toggle="modal" data-bs-target="#cartModal">
-          <i class="bi bi-cart"></i>
-          <span id="cartCount" class="badge bg-danger cart-count d-none">0</span>
+        <form action="{{ url('viewcart') }}" method="get">
+          @csrf
+        <button class="btn btn-outline-primary me-2">
+          <i class="bi bi-cart"><span style="color: red">{{ $cartCount > 0 ? '(' . $cartCount . ')' : '' }}</span> </i>
+          
         </button>
+        </form>
         @if (Auth::check())
           <form method="POST" action="{{ route('logout') }}">
             @csrf

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BillingDetail;
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +43,7 @@ class HomeController extends Controller
 
         $products = $query->get();
 
-        
+
         $cartCount = " ";
         if (Auth::check()) {
             $cartCount = Cart::where('user_id', Auth::id())->sum('quantity');
@@ -80,7 +82,7 @@ class HomeController extends Controller
     public function viewCart(Request $request)
     {
 
-         $cartCount = " ";
+        $cartCount = " ";
         if (Auth::check()) {
             $cartCount = Cart::where('user_id', Auth::id())->sum('quantity');
 
@@ -104,7 +106,55 @@ class HomeController extends Controller
 
     public function checkout(Request $request)
     {
-        return view('user.checkout');
+        $cartcount = " ";
+        if (Auth::check()) {
+            $cartCount = Cart::where('user_id', Auth::id())->sum('quantity');
+        }
+
+
+        $total = $request->input('total');
+
+        return view('user.checkout', compact('total', 'cartCount'));
+    }
+
+    public function placeOrder(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:500',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string|max:100',
+            'pincode' => 'required|string|max:20',
+        ]);
+
+        // Save billing details
+        $billingDetail = new BillingDetail();
+        $billingDetail->user_id = Auth::id();
+        $billingDetail->name = $request->name;
+        $billingDetail->phone = $request->phone;
+        $billingDetail->address = $request->address;
+        $billingDetail->city = $request->city;
+        $billingDetail->state = $request->state;
+        $billingDetail->pincode = $request->pincode;
+        $billingDetail->save();
+
+        $order=new Order();
+
+        $fullAddress = $request->address . ', ' . $request->city . ', ' . $request->state . ' - ' . $request->pincode;  
+
+        $order->user_id=Auth::id();
+        $order->name=$request->name;
+        $order->phone=$request->phone;
+        $order->address=$fullAddress;
+        $order->total=$request->total;
+        $order->save();
+
+    
+        Cart::where('user_id', Auth::id())->delete();
+
+        return redirect()->route('home')->with('success', 'Order placed successfully!');
     }
 }
 

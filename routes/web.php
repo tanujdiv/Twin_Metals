@@ -53,3 +53,5 @@ Route::get('viewcart',[HomeController::class,'viewCart'])->name('view.cart')->mi
 Route::post('updateCart/{id}',[HomeController::class,'updateCart'])->name('update.cart')->middleware('auth');
 
 Route::post('checkout',[HomeController::class,'checkout'])->name('checkout')->middleware('auth');
+
+Route::post('place-order',[HomeController::class,'placeOrder'])->name('place.order')->middleware('auth');

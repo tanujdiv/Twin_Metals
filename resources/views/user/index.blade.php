@@ -48,10 +48,6 @@
 {{-- end footer --}}
 
 
-{{-- add cart & cart view --}}
-@include('user.add to cart and cart view')
-{{-- end add cart & cart view --}}
-
 {{-- scripts --}}
 @include('user.script')
 {{-- end scripts --}}

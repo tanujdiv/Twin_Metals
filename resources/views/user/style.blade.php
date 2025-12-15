@@ -4,6 +4,18 @@
     background: #f8f9fa;
   }
 
+
+  .checkout-card {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: none;
+  }
+
   .product-card {
     border: none;
     border-radius: 12px;

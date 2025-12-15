@@ -30,16 +30,18 @@
     @include('user.nav')
     {{-- end navbar --}}
 
+
     <div class="container my-5">
-        <div class="row g-6 justify-content-center"> <!-- ADD THIS CLASS -->
+        <div class="row g-6 justify-content-center">
 
             <!-- Billing Details -->
             <div class="col-lg-8">
                 <div class="card checkout-card p-4">
                     <h4 class="mb-3 fw-semibold">Billing Details</h4>
 
-                    <form action="{{ url('placeOrder') }}" method="POST">
+                    <form action="{{ url('place-order') }}" method="post">
                         @csrf
+
                         <div class="row">
                             <div class="mb-3">
                                 <label class="form-label">Full Name</label>
@@ -54,46 +56,50 @@
 
                         <div class="mb-3">
                             <label class="form-label">Address</label>
-                            <input type="text" class="form-control" name="address" placeholder="enter street address">
+                            <input type="text" class="form-control" name="address" placeholder="Enter address">
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">City</label>
-                                <input type="text" class="form-control" name="city" placeholder="enter city">
+                                <input type="text" class="form-control" name="city" placeholder="Enter city">
                             </div>
 
                             <div class="col-md-3 mb-3">
                                 <label class="form-label">State</label>
-                                <input type="text" class="form-control" name="state" placeholder="enter state">
+                                <input type="text" class="form-control" name="state" placeholder="Enter state">
                             </div>
 
                             <div class="col-md-3 mb-3">
                                 <label class="form-label">Pincode</label>
-                                <input type="text" class="form-control" name="pincode" placeholder="enter pincode">
+                                <input type="text" class="form-control" name="pincode" placeholder="Enter pincode">
                             </div>
                         </div>
+
+                        <input type="hidden" name="total" value="{{ $total }}">
 
                         <button class="btn btn-primary w-100 mt-3">Proceed to Payment</button>
 
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 
+    </div>
+    </div>
+
+    <!-- BOOTSTRAP JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+
     {{-- footer --}}
-    @include('user.footer')
-    {{-- end footer --}}
+@include('user.footer')
+{{-- end footer --}}
 
-
-    {{-- scripts --}}
-    @include('user.script')
-    {{-- end scripts --}}
-
+{{-- scripts --}}
+@include('user.script')
+{{-- end scripts --}}
 
 </body>
 

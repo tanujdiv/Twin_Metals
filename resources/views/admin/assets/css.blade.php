@@ -104,5 +104,11 @@
     table.product-table img {
       width: 40px;
     }
+
+    .order-card {
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+      border: none;
+    }
   }
 </style>

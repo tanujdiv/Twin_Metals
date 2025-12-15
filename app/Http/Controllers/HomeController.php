@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +24,20 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        return view('admin.dashboard');
+         $totalusers = User::where('role', 'user')->count();
+
+
+
+        $orders = Order::with('user', 'product')->get();
+        $ordersCount = $orders->count();
+        $sumtotal = Order::where('status', 'completed')->with('product')->get();
+        $sumtotal = $sumtotal->sum(function ($order) {
+            return $order->product->price * $order->total_items;
+        });
+
+        $pendingOrders = $orders->where('status', 'pending')->count();
+        $orders = Order::with('user', 'product')->get();
+        return view('admin.dashboard', compact('orders', 'totalusers', 'ordersCount', 'sumtotal', 'pendingOrders'));
     }
 
     public function allproducts(Request $request)
@@ -41,7 +56,7 @@ class HomeController extends Controller
 
         $products = $query->get();
 
-        
+
         $cartCount = " ";
         if (Auth::check()) {
             $cartCount = Cart::where('user_id', Auth::id())->sum('quantity');
@@ -80,15 +95,25 @@ class HomeController extends Controller
     public function viewCart(Request $request)
     {
 
-         $cartCount = " ";
+        $cartCount = " ";
         if (Auth::check()) {
             $cartCount = Cart::where('user_id', Auth::id())->sum('quantity');
 
         }
-
+        
         $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
 
         return view('user.viewcart', compact('cartCount', 'cartItems'));
+    }
+
+    public function removeCartItem($id)
+    {
+        $cartItem = Cart::find($id);
+        if ($cartItem && $cartItem->user_id == Auth::id()) {
+            $cartItem->delete();
+        }
+
+        return redirect()->back()->with('success', 'Item removed from cart successfully!');
     }
 
     public function updateCart(Request $request, $id)
@@ -104,8 +129,39 @@ class HomeController extends Controller
 
     public function checkout(Request $request)
     {
-        return view('user.checkout');
+
+        $cartCount = " ";
+        if (Auth::check()) {
+            $cartCount = Cart::where('user_id', Auth::id())->sum('quantity');
+        }
+        return view('user.checkout', compact('cartCount'));
     }
+
+    public function placeOrder(Request $request)
+    {
+
+        // Here you would typically handle order placement logic,
+
+        $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
+
+        foreach ($cartItems as $item) {
+            $fullAddress = $request->address . ', ' . $request->city . ', ' . $request->state . ' - ' . $request->pincode;
+            $order = new Order();
+            $order->user_id = Auth::id();
+            $order->product_id = $item->product_id;
+            $order->name = $request->name;
+            $order->phone = $request->phone;
+            $order->full_address = $fullAddress;
+            $order->total_items = $item->quantity;
+            $order->save();
+        }
+
+        Cart::where('user_id', Auth::id())->delete();
+
+        return redirect('/')->with('success', 'Order placed successfully!');
+    }
+
+
 }
 
 

@@ -1,8 +1,7 @@
   <div class="sidebar position-fixed p-3">
     <h4 class="text-white mb-4">Dashboard</h4>
-    <a href="#"><i class="bi bi-speedometer2"></i> Overview</a>
-    <a href="#"><i class="bi bi-people"></i> Users</a>
-    <a href="#"><i class="bi bi-bag"></i> Orders</a>
+    <a href="{{ url('viewusers') }}"><i class="bi bi-people"></i> Users</a>
+    <a href="{{ url('vieworderlist') }}"><i class="bi bi-bag"></i> Orders</a>
     <a href={{ url('addproductview') }}><i class="bi bi-plus-circle"></i> Add Product</a>
     <a href="{{ url('showproducts') }}"><i class="bi bi-box-seam"></i> Show Products</a>
     <a href="#"><i class="bi bi-bar-chart"></i> Analytics</a>

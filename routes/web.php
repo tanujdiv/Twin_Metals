@@ -52,4 +52,17 @@ Route::get('viewcart',[HomeController::class,'viewCart'])->name('view.cart')->mi
 
 Route::post('updateCart/{id}',[HomeController::class,'updateCart'])->name('update.cart')->middleware('auth');
 
-Route::post('checkout',[HomeController::class,'checkout'])->name('checkout')->middleware('auth');
+Route::get('checkout',[HomeController::class,'checkout'])->name('checkout')->middleware('auth');
+
+Route::post('placeOrder',[HomeController::class,'placeOrder'])->name('placeOrder')->middleware('auth');
+
+Route::post('removeCartItem/{id}',[HomeController::class,'removeCartItem'])->name('remove.cart.item')->middleware('auth');
+
+Route::get('vieworderlist',[AdminController::class,'viewOrderList'])->name('view.order.list')->middleware('adminCheck');
+
+Route::delete('delete-order/{id}',[AdminController::class,'deleteOrder'])->name('delete.order')->middleware('adminCheck');
+
+Route::post('update-order-status/{id}',[AdminController::class,'updateOrderStatus'])->name('update.order.status')->middleware('adminCheck');
+
+Route::get('viewusers',[AdminController::class,'viewUsers'])->name('view.users')->middleware('adminCheck');
+

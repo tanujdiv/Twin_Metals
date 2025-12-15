@@ -96,7 +96,7 @@
                         <span>₹{{$Alltotal }}</span>
                     </div>
 
-                    <form action="{{ url('checkout/') }}" method="post">
+                    <form action="{{ url('checkout') }}" method="get">
                         @csrf
 
                         {{-- hidden input --}}

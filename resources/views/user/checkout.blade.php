@@ -39,7 +39,7 @@
                 <div class="card checkout-card p-4">
                     <h4 class="mb-3 fw-semibold">Billing Details</h4>
 
-                    <form action="{{ url('place-order') }}" method="post">
+                    <form action="{{ url('placeOrder') }}" method="post">
                         @csrf
 
                         <div class="row">

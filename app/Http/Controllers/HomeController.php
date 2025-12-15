@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BillingDetail;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
@@ -37,6 +38,8 @@ class HomeController extends Controller
 
         $pendingOrders = $orders->where('status', 'pending')->count();
         $orders = Order::with('user', 'product')->get();
+        $orders = $orders->sortByDesc('id');
+
         return view('admin.dashboard', compact('orders', 'totalusers', 'ordersCount', 'sumtotal', 'pendingOrders'));
     }
 
@@ -129,12 +132,15 @@ class HomeController extends Controller
 
     public function checkout(Request $request)
     {
-
-        $cartCount = " ";
+        $cartcount = " ";
         if (Auth::check()) {
             $cartCount = Cart::where('user_id', Auth::id())->sum('quantity');
         }
-        return view('user.checkout', compact('cartCount'));
+
+
+        $total = $request->input('total');
+
+        return view('user.checkout', compact('total', 'cartCount'));
     }
 
     public function placeOrder(Request $request)
